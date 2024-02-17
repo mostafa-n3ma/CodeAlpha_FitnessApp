@@ -1,6 +1,5 @@
 package com.example.codealpha_fitnessapp.presentations.navigation
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -11,14 +10,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.codealpha_fitnessapp.R
 import com.example.codealpha_fitnessapp.presentations.screens.DashboardScreen
@@ -28,10 +29,15 @@ import com.example.codealpha_fitnessapp.presentations.screens.SignUpScreen
 import com.example.codealpha_fitnessapp.presentations.screens.WorkoutDetailsScreen
 import com.example.codealpha_fitnessapp.presentations.screens.WorkoutsScreen
 
+@Preview
+@Composable
+fun myPreview() {
+    NavigationBarComposable()
+}
+
+
 @Composable
 fun NavigationBarComposable() {
-
-
     val navController = rememberNavController()
     val items = listOf(
         BottomNavigationItem(
@@ -51,56 +57,74 @@ fun NavigationBarComposable() {
         )
     )
 
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+
+
+
+
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(1)
     }
 
     Scaffold(
         bottomBar = {
-            NavigationBar {
-                items.forEachIndexed { index, item ->
+            if(currentDestination?.route !in listOf(
+                AppDestinations.WorkoutDetailsScreen.rout
+            )){
+                NavigationBar {
+                    items.forEachIndexed { index, item ->
 
-                    NavigationBarItem(
-                        selected = selectedItemIndex == index,
-                        onClick = {
-
-                        },
-                        alwaysShowLabel = true,
-                        label = {
-                            Text(
-                                text = item.title,
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            )
-                        },
-                        icon = {
-                            Icon(
-                                painter = if (selectedItemIndex == index) {
-                                    item.selectedIcon
-                                }else{
-                                     item.unSelectedIcon
+                        NavigationBarItem(
+                            selected = selectedItemIndex == index,
+                            onClick = {
+                                selectedItemIndex = index
+                                when(item.title){
+                                    "Goals"->{navController.navigate(AppDestinations.GoalSScreen.rout)}
+                                    "Dashboard"->{navController.navigate(AppDestinations.DashboardScreen.rout)}
+                                    "Workouts"->{navController.navigate(AppDestinations.WorkoutsScreen.rout)}
                                 }
-                                , contentDescription = item.title
-                            )
-                        }
-                    )
+                            },
+                            alwaysShowLabel = true,
+                            label = {
+                                Text(
+                                    text = item.title,
+                                    style = TextStyle(
+                                        fontSize = 12.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                )
+                            },
+                            icon = {
+                                Icon(
+                                    painter = if (selectedItemIndex == index) {
+                                        item.selectedIcon
+                                    }else{
+                                        item.unSelectedIcon
+                                    },
+                                    contentDescription = item.title,
+                                    tint = Color.Blue
+                                )
+                            }
+                        )
 
+                    }
                 }
             }
+
         }
     )
     {
-        ScreenNavHost(navController)
+        ScreensNavHost(navController)
     }
 
 
 }
 
 @Composable
-fun ScreenNavHost(navController: NavHostController) {
-
+fun ScreensNavHost(navController: NavHostController) {
     NavHost(navController = navController, startDestination = AppDestinations.DashboardScreen.rout){
        composable(AppDestinations.DashboardScreen.rout) {
            DashboardScreen()
@@ -113,7 +137,7 @@ fun ScreenNavHost(navController: NavHostController) {
             SignUpScreen()
         }
         composable(AppDestinations.WorkoutsScreen.rout) {
-            WorkoutsScreen()
+            WorkoutsScreen(navController)
         }
         composable(AppDestinations.WorkoutDetailsScreen.rout) {
             WorkoutDetailsScreen()
