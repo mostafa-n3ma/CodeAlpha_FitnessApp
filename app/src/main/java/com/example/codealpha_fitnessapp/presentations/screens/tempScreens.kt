@@ -17,19 +17,8 @@ fun DashboardScreen() {
 }
 
 
-@Composable
-fun LogInScreen() {
-    Column(modifier = Modifier.fillMaxSize()) {
-        Text(text = "LogInScreen")
-    }
-}
 
-@Composable
-fun SignUpScreen() {
-    Column(modifier = Modifier.fillMaxSize()) {
-        Text(text = "SignUpScreen")
-    }
-}
+
 @Composable
 fun WorkoutsScreen(navController: NavHostController) {
     Column(modifier = Modifier.fillMaxSize()) {

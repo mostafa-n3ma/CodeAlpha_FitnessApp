@@ -1,6 +1,6 @@
 package com.example.codealpha_fitnessapp.operations.dataMangment
 
-enum class Gender { Male, Female }
+
 enum class MuscleGroup {
     Back,
     Chest,

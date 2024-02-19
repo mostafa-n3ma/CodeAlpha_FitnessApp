@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CodeAlpha_FitnessApp</string>
+    <string name="welcome_msg">"Welcome to FitPro!\nStart your fitness journey now. Hit 'Start' to begin!"</string>
+    <string name="show_password">show password\n</string>
+    <string name="hide_password">hide password</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="log_in">Log In</string>
+    <string name="already_have_an_account">Already have an account?</string>
 </resources>

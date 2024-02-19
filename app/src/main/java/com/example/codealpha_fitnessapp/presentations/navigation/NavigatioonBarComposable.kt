@@ -26,18 +26,20 @@ import com.example.codealpha_fitnessapp.presentations.screens.DashboardScreen
 import com.example.codealpha_fitnessapp.presentations.screens.GoalSScreen
 import com.example.codealpha_fitnessapp.presentations.screens.LogInScreen
 import com.example.codealpha_fitnessapp.presentations.screens.SignUpScreen
+import com.example.codealpha_fitnessapp.presentations.screens.WelcomeScreen
 import com.example.codealpha_fitnessapp.presentations.screens.WorkoutDetailsScreen
 import com.example.codealpha_fitnessapp.presentations.screens.WorkoutsScreen
+import com.example.codealpha_fitnessapp.presentations.viewModels.AuthViewModel
 
 @Preview
 @Composable
 fun myPreview() {
-    NavigationBarComposable()
+//    NavigationBarComposable(authViewModel)
 }
 
 
 @Composable
-fun NavigationBarComposable() {
+fun NavigationBarComposable(authViewModel: AuthViewModel) {
     val navController = rememberNavController()
     val items = listOf(
         BottomNavigationItem(
@@ -62,9 +64,6 @@ fun NavigationBarComposable() {
     val currentDestination = navBackStackEntry?.destination
 
 
-
-
-
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(1)
     }
@@ -72,7 +71,10 @@ fun NavigationBarComposable() {
     Scaffold(
         bottomBar = {
             if(currentDestination?.route !in listOf(
-                AppDestinations.WorkoutDetailsScreen.rout
+                AppDestinations.WorkoutDetailsScreen.rout,
+                AppDestinations.WelcomeScreen.rout,
+                AppDestinations.LogInScreen.rout,
+                AppDestinations.SignUpScreen.rout
             )){
                 NavigationBar {
                     items.forEachIndexed { index, item ->
@@ -117,24 +119,30 @@ fun NavigationBarComposable() {
         }
     )
     {
-        ScreensNavHost(navController)
+        ScreensNavHost(navController,authViewModel)
     }
 
 
 }
 
 @Composable
-fun ScreensNavHost(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = AppDestinations.DashboardScreen.rout){
+fun ScreensNavHost(navController: NavHostController, authViewModel: AuthViewModel) {
+    NavHost(navController = navController, startDestination = AppDestinations.WelcomeScreen.rout){
+
+        composable(AppDestinations.WelcomeScreen.rout){
+            WelcomeScreen(navController = navController, authViewModel = authViewModel)
+        }
+
+
        composable(AppDestinations.DashboardScreen.rout) {
            DashboardScreen()
        }
 
         composable(AppDestinations.LogInScreen.rout) {
-            LogInScreen()
+            LogInScreen(navController, authViewModel)
         }
         composable(AppDestinations.SignUpScreen.rout) {
-            SignUpScreen()
+            SignUpScreen(navController,authViewModel)
         }
         composable(AppDestinations.WorkoutsScreen.rout) {
             WorkoutsScreen(navController)

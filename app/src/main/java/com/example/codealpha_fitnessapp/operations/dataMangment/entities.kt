@@ -10,12 +10,29 @@ import java.util.Date
 @Entity(tableName = "users")
 data class User(
     @PrimaryKey(autoGenerate = true)
-    val id:Int,
+    val id:Int = 0,
     var name:String,
     val email:String,
-    var weight:List<Int>,
-    var gender:Gender
+    var weight:List<WeightRecord>,
 )
+data class WeightRecord(val weight:Double,val lastUpdate:Date)
+class WeightRecordConverter{
+    @TypeConverter
+    fun fromWeightRecordList(value:List<WeightRecord>?):String?{
+        val gson = Gson()
+        return gson.toJson(value)
+    }
+
+    @TypeConverter
+    fun toWeightRecordList(value: String?):List<WeightRecord>?{
+        val gson = Gson()
+        val type = object :TypeToken<List<WeightRecord>>() {}.type
+        return gson.fromJson<List<WeightRecord>>(value,type)
+    }
+
+}
+
+
 
 class WeightListTypeConverter {
 
