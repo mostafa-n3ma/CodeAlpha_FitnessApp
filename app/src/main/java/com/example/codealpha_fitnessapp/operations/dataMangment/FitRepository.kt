@@ -19,6 +19,18 @@ constructor(
         userDao.insertUser(user)
     }
 
+    suspend fun updateUser(user: User) {
+        userDao.updateUser(user)
+    }
+
+    suspend fun deleteUser(user: User) {
+        userDao.deleteUser(user)
+    }
+
+    suspend fun deleteAllUsers() {
+        userDao.deleteAllUsers()
+    }
+
     // WorkoutDao functions
     suspend fun getUserWorkouts(userID: Int): List<Workout> {
         return workoutDao.getUserWorkouts(userID)
@@ -28,6 +40,18 @@ constructor(
         workoutDao.insertWorkout(workout)
     }
 
+    suspend fun updateWorkout(workout: Workout) {
+        workoutDao.updateWorkout(workout)
+    }
+
+    suspend fun deleteWorkout(workout: Workout) {
+        workoutDao.deleteWorkout(workout)
+    }
+
+    suspend fun deleteAllUserWorkouts(userID: Int) {
+        workoutDao.deleteAllUserWorkouts(userID)
+    }
+
     // GoalDao functions
     suspend fun getUsersGoals(userID: Int): List<Goal> {
         return goalDao.getUsersGoals(userID)
@@ -35,5 +59,17 @@ constructor(
 
     suspend fun insertGoal(goal: Goal) {
         goalDao.insertGoal(goal)
+    }
+
+    suspend fun updateGoal(goal: Goal) {
+        goalDao.updateGoal(goal)
+    }
+
+    suspend fun deleteGoal(goal: Goal) {
+        goalDao.deleteGoal(goal)
+    }
+
+    suspend fun deleteAllUserGoals(userID: Int) {
+        goalDao.deleteAllUserGoals(userID)
     }
 }

@@ -9,14 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.codealpha_fitnessapp.presentations.navigation.AppDestinations
 
-@Composable
-fun DashboardScreen() {
-    Column(modifier = Modifier.fillMaxSize()) {
-        Text(text = "DashBoard")
-    }
-}
-
-
 
 
 @Composable

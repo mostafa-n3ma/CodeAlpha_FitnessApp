@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.core.view.WindowCompat
 import com.example.codealpha_fitnessapp.presentations.navigation.NavigationBarComposable
 import com.example.codealpha_fitnessapp.presentations.viewModels.AuthViewModel
 import com.example.codealpha_fitnessapp.ui.theme.CodeAlpha_FitnessAppTheme
@@ -17,8 +16,11 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    val authViewModel :AuthViewModel by viewModels()
+    private val authViewModel :AuthViewModel by viewModels()
 
+    companion object{
+        const val TAG = "MainActivity"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +32,15 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     NavigationBarComposable(authViewModel)
+
                 }
             }
         }
     }
+
+
+
 }
+
+
 

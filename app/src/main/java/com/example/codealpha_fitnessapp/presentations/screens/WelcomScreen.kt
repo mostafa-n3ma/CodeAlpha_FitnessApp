@@ -37,6 +37,7 @@ import com.google.firebase.auth.FirebaseUser
 @Composable
 fun WelcomeScreen(navController: NavHostController, authViewModel: AuthViewModel) {
     val user: State<FirebaseUser?> = authViewModel.user.collectAsState()
+    authViewModel.checkAndUpdateUserStatus()
     if (user.value != null){
         navController.navigate(AppDestinations.DashboardScreen.rout){
             popUpTo(AppDestinations.WelcomeScreen.rout){inclusive = true}

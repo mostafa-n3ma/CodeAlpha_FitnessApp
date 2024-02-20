@@ -1,4 +1,4 @@
-package com.example.codealpha_fitnessapp.presentations.screens
+package com.example.codealpha_fitnessapp.presentations
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -32,11 +32,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.codealpha_fitnessapp.R
 import com.example.codealpha_fitnessapp.ui.theme.lightTextColor
 import com.example.codealpha_fitnessapp.ui.theme.primaryColor
+import com.example.codealpha_fitnessapp.ui.theme.textColor
 
 
 @ExperimentalMaterial3Api
@@ -116,7 +118,7 @@ fun PasswordTextField(labelValue: String, icon: Painter, password: MutableState<
 
 
 @Composable
-fun AnnotatedText(normalText:String,annotatedText:String,onclick: () -> Unit) {
+fun AnnotatedText(normalText: String, annotatedText: String, onclick: () -> Unit) {
 
     val annotatedString = buildAnnotatedString {
         append(normalText)
@@ -150,3 +152,20 @@ fun AnnotatedText(normalText:String,annotatedText:String,onclick: () -> Unit) {
 }
 
 
+@Composable
+fun Head2Text(txt:String) {
+    Text(
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+        text = txt,
+        style = TextStyle(
+            fontSize = 20.sp,
+            fontFamily = FontFamily(Font(R.font.poppins_regular)),
+            color = textColor
+        )
+    )
+}
+@Preview(showBackground = true)
+@Composable
+fun DateItemPreview() {
+    Head2Text(txt = "Today's Activity")
+}

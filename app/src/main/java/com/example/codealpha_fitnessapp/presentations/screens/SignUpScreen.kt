@@ -24,7 +24,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -39,7 +38,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.codealpha_fitnessapp.R
-import com.example.codealpha_fitnessapp.presentations.navigation.AppDestinations
+import com.example.codealpha_fitnessapp.presentations.AnnotatedText
+import com.example.codealpha_fitnessapp.presentations.EditTextField
+import com.example.codealpha_fitnessapp.presentations.PasswordTextField
 import com.example.codealpha_fitnessapp.presentations.viewModels.AuthEvents
 import com.example.codealpha_fitnessapp.presentations.viewModels.AuthViewModel
 import com.example.codealpha_fitnessapp.ui.theme.backgroundColor
@@ -56,6 +57,10 @@ fun SignUpScreen(navController: NavController, authViewModel: AuthViewModel? = n
         authViewModel!!.announceMessage("")
     }
 
+    val user by authViewModel!!.user.collectAsState()
+    if (user!=null){
+        navController.popBackStack()
+    }
 
 
 

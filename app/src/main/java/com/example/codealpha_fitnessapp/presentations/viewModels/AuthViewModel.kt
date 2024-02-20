@@ -52,6 +52,7 @@ constructor(private val fitRepository: FitRepository) : ViewModel() {
         firebaseAuth = Firebase.auth
         _user.update { firebaseAuth.currentUser }
         checkAndUpdateUserStatus()
+//        signOut()
     }
 
 

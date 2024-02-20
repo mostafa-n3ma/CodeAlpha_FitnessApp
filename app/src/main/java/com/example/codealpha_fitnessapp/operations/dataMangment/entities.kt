@@ -54,11 +54,11 @@ class WeightListTypeConverter {
 @Entity(tableName = "Workouts")
 data class Workout(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int = 0,
     val userID:Int,
     var title:String,
-    var date: Date,
-    var muscleGroup: MuscleGroup,
+    var date: Date?,
+    var muscleGroup: MuscleGroup?,
     var restDuration:Int,
     val exercises:List<Exercise>
 )

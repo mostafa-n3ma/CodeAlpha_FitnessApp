@@ -135,7 +135,7 @@ fun ScreensNavHost(navController: NavHostController, authViewModel: AuthViewMode
 
 
        composable(AppDestinations.DashboardScreen.rout) {
-           DashboardScreen()
+           DashboardScreen(navController,authViewModel)
        }
 
         composable(AppDestinations.LogInScreen.rout) {

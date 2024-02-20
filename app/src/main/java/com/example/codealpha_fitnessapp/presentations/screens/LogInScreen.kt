@@ -22,6 +22,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,11 +40,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.example.codealpha_fitnessapp.R
+import com.example.codealpha_fitnessapp.presentations.AnnotatedText
+import com.example.codealpha_fitnessapp.presentations.EditTextField
+import com.example.codealpha_fitnessapp.presentations.PasswordTextField
 import com.example.codealpha_fitnessapp.presentations.navigation.AppDestinations
 import com.example.codealpha_fitnessapp.presentations.viewModels.AuthEvents
 import com.example.codealpha_fitnessapp.ui.theme.backgroundColor
 import com.example.codealpha_fitnessapp.ui.theme.cardsColor
 import com.example.codealpha_fitnessapp.ui.theme.primaryColor
+import com.google.firebase.auth.FirebaseUser
 
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -56,6 +61,15 @@ fun LogInScreen(navController: NavController, authViewModel: AuthViewModel? = nu
         authViewModel!!.announceMessage("")
     }
 
+
+    val user: State<FirebaseUser?> = authViewModel!!.user.collectAsState()
+
+    if (user.value != null){
+        navController.navigate(AppDestinations.DashboardScreen.rout) {
+            // Ensure that the WelcomeScreen is popped off the back stack
+            popUpTo(AppDestinations.LogInScreen.rout) { inclusive = true }
+        }
+    }
 
 
     // the sheet state which starts with

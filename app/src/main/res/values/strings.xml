@@ -7,4 +7,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="log_in">Log In</string>
     <string name="already_have_an_account">Already have an account?</string>
+    <string name="today_s_activity">Today\'s Activity</string>
+    <string name="goals_progress">Goals Progress</string>
+    <string name="this_week">This Week</string>
 </resources>
