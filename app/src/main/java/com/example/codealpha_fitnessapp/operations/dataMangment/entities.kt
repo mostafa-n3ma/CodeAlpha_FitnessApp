@@ -7,6 +7,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.Date
 
+
 @Entity(tableName = "users")
 data class User(
     @PrimaryKey(autoGenerate = true)
@@ -54,20 +55,29 @@ class WeightListTypeConverter {
 @Entity(tableName = "Workouts")
 data class Workout(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val userID:Int,
+    var id: Int? = null,
+    val userID:Int?,
     var title:String,
     var date: Date?,
     var muscleGroup: MuscleGroup?,
     var restDuration:Int,
-    val exercises:List<Exercise>
+    var exercises:List<Exercise>
 )
+{
+    fun calculateDuration():Double{
+        var duration = 0.0
+        exercises.map {exercise->
+            duration += exercise.sets * exercise.duration
+        }
+        return duration/60
+    }
+}
 
 data class Exercise(
     var name: String,
     var sets:Int,
     var reps:Int,
-    val duration:Int
+    var duration:Int
 )
 
 class ExerciseListConverter {

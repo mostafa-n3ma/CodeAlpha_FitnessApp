@@ -12,21 +12,6 @@ import com.example.codealpha_fitnessapp.presentations.navigation.AppDestinations
 
 
 @Composable
-fun WorkoutsScreen(navController: NavHostController) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        Text(text = "WorkoutsScreen")
-        Button(onClick = { navController.navigate(AppDestinations.WorkoutDetailsScreen.rout) }) {
-            Text(text = "WorkoutDetailsScreen")
-        }
-    }
-}
-@Composable
-fun WorkoutDetailsScreen() {
-    Column(modifier = Modifier.fillMaxSize()) {
-        Text(text = "WorkoutDetailsScreen")
-    }
-}
-@Composable
 fun GoalSScreen() {
     Column(modifier = Modifier.fillMaxSize()) {
         Text(text = "GoalSScreen")

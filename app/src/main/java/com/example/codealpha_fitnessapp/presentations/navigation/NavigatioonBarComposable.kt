@@ -17,10 +17,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.codealpha_fitnessapp.R
 import com.example.codealpha_fitnessapp.presentations.screens.DashboardScreen
 import com.example.codealpha_fitnessapp.presentations.screens.GoalSScreen
@@ -28,6 +30,7 @@ import com.example.codealpha_fitnessapp.presentations.screens.LogInScreen
 import com.example.codealpha_fitnessapp.presentations.screens.SignUpScreen
 import com.example.codealpha_fitnessapp.presentations.screens.WelcomeScreen
 import com.example.codealpha_fitnessapp.presentations.screens.WorkoutDetailsScreen
+import com.example.codealpha_fitnessapp.presentations.screens.WorkoutPlayScreen
 import com.example.codealpha_fitnessapp.presentations.screens.WorkoutsScreen
 import com.example.codealpha_fitnessapp.presentations.viewModels.AuthViewModel
 
@@ -44,16 +47,19 @@ fun NavigationBarComposable(authViewModel: AuthViewModel) {
     val items = listOf(
         BottomNavigationItem(
             title = "Goals",
+            route = AppDestinations.GoalSScreen.rout,
             selectedIcon = painterResource(id = R.drawable.goals_filled),
             unSelectedIcon = painterResource(id = R.drawable.goals_outlined)
         ),
         BottomNavigationItem(
             title = "Dashboard",
+            route = AppDestinations.DashboardScreen.rout,
             selectedIcon = painterResource(id = R.drawable.dashboard_filled),
             unSelectedIcon = painterResource(id = R.drawable.dashboard_outlined)
         ),
         BottomNavigationItem(
             title = "Workouts",
+            route = AppDestinations.WorkoutsScreen.rout,
             selectedIcon = painterResource(id = R.drawable.workout_filled),
             unSelectedIcon = painterResource(id = R.drawable.workout_outlined)
         )
@@ -70,23 +76,36 @@ fun NavigationBarComposable(authViewModel: AuthViewModel) {
 
     Scaffold(
         bottomBar = {
-            if(currentDestination?.route !in listOf(
-                AppDestinations.WorkoutDetailsScreen.rout,
-                AppDestinations.WelcomeScreen.rout,
-                AppDestinations.LogInScreen.rout,
-                AppDestinations.SignUpScreen.rout
+            if(currentDestination?.route in listOf(
+                AppDestinations.DashboardScreen.rout,
+                AppDestinations.GoalSScreen.rout,
+                AppDestinations.WorkoutsScreen.rout
             )){
                 NavigationBar {
                     items.forEachIndexed { index, item ->
 
                         NavigationBarItem(
-                            selected = selectedItemIndex == index,
+                            selected = item.route == currentDestination?.route,
                             onClick = {
                                 selectedItemIndex = index
-                                when(item.title){
-                                    "Goals"->{navController.navigate(AppDestinations.GoalSScreen.rout)}
-                                    "Dashboard"->{navController.navigate(AppDestinations.DashboardScreen.rout)}
-                                    "Workouts"->{navController.navigate(AppDestinations.WorkoutsScreen.rout)}
+                                when (item.title) {
+                                    "Goals" -> {
+                                        navController.navigate(AppDestinations.GoalSScreen.rout){
+                                            popUpTo(AppDestinations.GoalSScreen.rout){inclusive = true}
+                                        }
+                                    }
+
+                                    "Dashboard" -> {
+                                        navController.navigate(AppDestinations.DashboardScreen.rout){
+                                            popUpTo(AppDestinations.DashboardScreen.rout){inclusive =true}
+                                        }
+                                    }
+
+                                    "Workouts" -> {
+                                        navController.navigate(AppDestinations.WorkoutsScreen.rout){
+                                            popUpTo(AppDestinations.WorkoutsScreen.rout){inclusive = true}
+                                        }
+                                    }
                                 }
                             },
                             alwaysShowLabel = true,
@@ -101,7 +120,7 @@ fun NavigationBarComposable(authViewModel: AuthViewModel) {
                             },
                             icon = {
                                 Icon(
-                                    painter = if (selectedItemIndex == index) {
+                                    painter = if (item.route == currentDestination?.route) {
                                         item.selectedIcon
                                     }else{
                                         item.unSelectedIcon
@@ -147,9 +166,25 @@ fun ScreensNavHost(navController: NavHostController, authViewModel: AuthViewMode
         composable(AppDestinations.WorkoutsScreen.rout) {
             WorkoutsScreen(navController)
         }
-        composable(AppDestinations.WorkoutDetailsScreen.rout) {
-            WorkoutDetailsScreen()
+        composable(
+            route = "${AppDestinations.WorkoutDetailsScreen.rout}/{wkId}",
+            arguments = listOf(navArgument("wkId") { type = NavType.IntType })
+            ){backStackEntry ->
+            val wkId = backStackEntry.arguments?.getInt("wkId")
+            WorkoutDetailsScreen(navController,wkId)
         }
+
+        composable(
+            route = "${AppDestinations.WorkoutPlayScreen.rout}/{wkId}",
+            arguments = listOf(navArgument("wkId") { type = NavType.IntType })
+        ){backStackEntry ->
+            val wkId = backStackEntry.arguments?.getInt("wkId")
+            WorkoutPlayScreen(navController,wkId)
+        }
+
+
+
+
         composable(AppDestinations.GoalSScreen.rout) {
             GoalSScreen()
         }

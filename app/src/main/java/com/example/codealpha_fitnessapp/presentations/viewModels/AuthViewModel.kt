@@ -3,9 +3,13 @@ package com.example.codealpha_fitnessapp.presentations.viewModels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.room.util.copy
+import com.example.codealpha_fitnessapp.operations.dataMangment.Exercise
 import com.example.codealpha_fitnessapp.operations.dataMangment.FitRepository
+import com.example.codealpha_fitnessapp.operations.dataMangment.MuscleGroup
 import com.example.codealpha_fitnessapp.operations.dataMangment.User
 import com.example.codealpha_fitnessapp.operations.dataMangment.WeightRecord
+import com.example.codealpha_fitnessapp.operations.dataMangment.Workout
 import com.example.codealpha_fitnessapp.operations.getCurrentDate
 import com.example.codealpha_fitnessapp.operations.validateEmail
 import com.google.firebase.auth.FirebaseAuth
@@ -52,7 +56,41 @@ constructor(private val fitRepository: FitRepository) : ViewModel() {
         firebaseAuth = Firebase.auth
         _user.update { firebaseAuth.currentUser }
         checkAndUpdateUserStatus()
-//        signOut()
+//        testing99()
+
+    }
+
+    private fun testing99() {
+        viewModelScope.launch {
+            val allworkouts = fitRepository.getUserWorkouts(1)
+            Log.d(TAG, ": allworkouts:${allworkouts.size}")
+            allworkouts.map {
+                Log.d(TAG, ": allworkouts:${it}")
+            }
+            val w1 = allworkouts[0]
+            Log.d(TAG, "testing99: w1:$w1")
+            // that's how you do deep copy so when you change the
+            // exercises list in w2 it don't effect the list in w1
+            val w2 = w1.copy(exercises = w1.exercises.map { it.copy() })
+            Log.d(TAG, "testing99: w2 : $w2")
+            Log.d(TAG, "testing99:  w2 == w1 :${w2 == w1}")
+
+            Log.d(TAG, "testing99:after updating   w1:$w1")
+            Log.d(TAG, "testing99:after updating   w2 : $w2")
+            Log.d(TAG, "testing99:after updating   w2 == w1 :${w2 == w1}")
+
+
+
+
+
+//            w2.restDuration = 99
+//            w2.exercises[0].duration = 99
+//            w2.title = "name2"
+
+
+
+
+        }
     }
 
 

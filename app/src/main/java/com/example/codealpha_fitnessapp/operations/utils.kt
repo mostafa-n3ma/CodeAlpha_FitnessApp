@@ -1,6 +1,8 @@
 package com.example.codealpha_fitnessapp.operations
 
 
+import com.example.codealpha_fitnessapp.operations.dataMangment.Workout
+import com.google.gson.Gson
 import java.util.Calendar
 import java.util.Date
 fun validateEmail(email: String): Boolean {
@@ -62,3 +64,15 @@ fun getCurrentWeekDays(): List<Date> {
 }
 
 
+
+fun getWorkoutArg(workout: Workout):String{
+    return Gson().toJson(workout)
+}
+
+fun Workout.toArg():String{
+     return Gson().toJson(this)
+}
+
+fun String.fromArg():Workout{
+    return Gson().fromJson(this,Workout::class.java)
+}

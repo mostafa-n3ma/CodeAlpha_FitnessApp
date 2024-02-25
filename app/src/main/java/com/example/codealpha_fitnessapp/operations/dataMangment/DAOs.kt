@@ -29,6 +29,10 @@ interface WorkoutDao {
     @Query("SELECT * FROM workouts WHERE userID = :userID")
     suspend fun getUserWorkouts(userID: Int): List<Workout>
 
+
+    @Query("SELECT * FROM workouts WHERE id = :workoutId")
+    suspend fun getWorkoutById(workoutId: Int): Workout
+
     @Insert
     suspend fun insertWorkout(workout: Workout)
 
@@ -36,10 +40,11 @@ interface WorkoutDao {
     suspend fun updateWorkout(workout: Workout)
 
     @Delete
-    suspend fun deleteWorkout(workout: Workout)
+    suspend fun deleteWorkout(workout: Workout): Int
 
     @Query("DELETE FROM workouts WHERE userID = :userID")
     suspend fun deleteAllUserWorkouts(userID: Int)
+
 }
 
 @Dao

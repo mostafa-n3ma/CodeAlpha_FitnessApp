@@ -7,6 +7,7 @@ import com.example.codealpha_fitnessapp.R
 
 data class BottomNavigationItem(
     val title:String,
+    val route:String,
     val selectedIcon:Painter,
     val unSelectedIcon:Painter
 )

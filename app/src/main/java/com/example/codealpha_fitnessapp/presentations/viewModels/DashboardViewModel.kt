@@ -69,36 +69,36 @@ constructor(private val repository: FitRepository) : ViewModel() {
             }
             _backWeeklyActivity.update {
                 collectMuscleWeeklyDuration(allWorkouts.filter {
-                    it.muscleGroup == MuscleGroup.Back && it.date!!.date in weekdaysDateRange
+                    it.muscleGroup == MuscleGroup.Back
+                            &&
+                            it.date?.date in weekdaysDateRange
                 })
             }
 
-
-
             _chestWeeklyActivity.update {
                 collectMuscleWeeklyDuration(allWorkouts.filter {
-                    it.muscleGroup == MuscleGroup.Chest && it.date!!.date in weekdaysDateRange
+                    it.muscleGroup == MuscleGroup.Chest && it.date?.date in weekdaysDateRange
                 })
             }
 
 
             _bicepsWeeklyActivity.update {
                 collectMuscleWeeklyDuration(allWorkouts.filter {
-                    it.muscleGroup == MuscleGroup.Biceps && it.date!!.date in weekdaysDateRange
+                    it.muscleGroup == MuscleGroup.Biceps && it.date?.date in weekdaysDateRange
                 })
             }
 
 
             _tricepsWeeklyActivity.update {
                 collectMuscleWeeklyDuration(allWorkouts.filter {
-                    it.muscleGroup == MuscleGroup.Triceps && it.date!!.date in weekdaysDateRange
+                    it.muscleGroup == MuscleGroup.Triceps && it.date?.date in weekdaysDateRange
                 })
             }
 
 
             _legsWeeklyActivity.update {
                 collectMuscleWeeklyDuration(allWorkouts.filter {
-                    it.muscleGroup == MuscleGroup.Legs && it.date!!.date in weekdaysDateRange
+                    it.muscleGroup == MuscleGroup.Legs && it.date?.date in weekdaysDateRange
                 })
             }
 
@@ -106,14 +106,14 @@ constructor(private val repository: FitRepository) : ViewModel() {
 
             _shouldersWeeklyActivity.update {
                 collectMuscleWeeklyDuration(allWorkouts.filter {
-                    it.muscleGroup == MuscleGroup.Shoulders && it.date!!.date in weekdaysDateRange
+                    it.muscleGroup == MuscleGroup.Shoulders && it.date?.date in weekdaysDateRange
                 })
             }
 
 
             _absWeeklyActivity.update {
                 collectMuscleWeeklyDuration(allWorkouts.filter {
-                    it.muscleGroup == MuscleGroup.Abs && it.date!!.date in weekdaysDateRange
+                    it.muscleGroup == MuscleGroup.Abs && it.date?.date in weekdaysDateRange
                 })
             }
 

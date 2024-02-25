@@ -36,6 +36,10 @@ constructor(
         return workoutDao.getUserWorkouts(userID)
     }
 
+    suspend fun getWorkoutById(workoutId:Int):Workout{
+        return workoutDao.getWorkoutById(workoutId)
+    }
+
     suspend fun insertWorkout(workout: Workout) {
         workoutDao.insertWorkout(workout)
     }
@@ -44,8 +48,13 @@ constructor(
         workoutDao.updateWorkout(workout)
     }
 
-    suspend fun deleteWorkout(workout: Workout) {
-        workoutDao.deleteWorkout(workout)
+    suspend fun deleteWorkout(workout: Workout): Boolean {
+        val rowsDeleted = workoutDao.deleteWorkout(workout)
+        return if (rowsDeleted == 1) {
+            true // Deletion successful
+        } else {
+            false // Deletion failed
+        }
     }
 
     suspend fun deleteAllUserWorkouts(userID: Int) {

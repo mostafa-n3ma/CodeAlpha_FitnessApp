@@ -7,5 +7,6 @@ enum class AppDestinations(val rout:String) {
     DashboardScreen("DASHBOARD"),
     WorkoutsScreen("WORKOUTS"),
     WorkoutDetailsScreen("WORKOUT_DETAILS"),
+    WorkoutPlayScreen("PLAY_WORKOUT"),
     GoalSScreen("GOALS")
 }
