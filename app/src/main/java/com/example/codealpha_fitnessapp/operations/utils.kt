@@ -64,6 +64,18 @@ fun getCurrentWeekDays(): List<Date> {
 }
 
 
+fun isInCurrentMonth(date: Date): Boolean {
+    val calendar = Calendar.getInstance()
+    val currentMonth = calendar.get(Calendar.MONTH)
+    val currentYear = calendar.get(Calendar.YEAR)
+
+    calendar.time = date
+    val givenMonth = calendar.get(Calendar.MONTH)
+    val givenYear = calendar.get(Calendar.YEAR)
+
+    return currentMonth == givenMonth && currentYear == givenYear
+}
+
 
 fun getWorkoutArg(workout: Workout):String{
     return Gson().toJson(workout)

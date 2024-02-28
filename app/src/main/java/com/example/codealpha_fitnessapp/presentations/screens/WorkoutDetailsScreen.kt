@@ -244,8 +244,8 @@ fun WorkoutBottomSheetLayout(
                     .clickable {
                         if (sessionObject.value?.title != "" && sessionObject.value?.muscleGroup != null) {
                             detailsViewModel.setEvent(DetailsEvent.UpdateDatabaseObject)
-                            navController.navigate(AppDestinations.WorkoutsScreen.rout){
-                                popUpTo(AppDestinations.WorkoutsScreen.rout){inclusive =true}
+                            navController.navigate(AppDestinations.WorkoutsScreen.route){
+                                popUpTo(AppDestinations.WorkoutsScreen.route){inclusive =true}
                             }
                         } else {
                             Toast

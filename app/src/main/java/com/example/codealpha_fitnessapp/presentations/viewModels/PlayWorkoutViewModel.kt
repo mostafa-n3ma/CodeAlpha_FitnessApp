@@ -157,6 +157,9 @@ constructor(private val repository: FitRepository) : ViewModel() {
             _onDone.value = true
         }
     }
+
+
+
     private val _onDone = MutableStateFlow<Boolean>(false)
     val onDone:StateFlow<Boolean> = _onDone
 

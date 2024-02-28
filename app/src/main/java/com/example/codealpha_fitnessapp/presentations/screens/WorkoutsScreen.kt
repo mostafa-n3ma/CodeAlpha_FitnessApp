@@ -41,7 +41,7 @@ fun WorkoutsScreen(navController: NavHostController) {
             havBackBtn = false,
             haveAddBtn = true,
             onAddClicked = {
-                navController.navigate("${AppDestinations.WorkoutDetailsScreen.rout}/${0}")
+                navController.navigate("${AppDestinations.WorkoutDetailsScreen.route}/${0}")
             })
 
 
@@ -64,13 +64,13 @@ fun WorkoutsScreen(navController: NavHostController) {
                         muscleGroup = workoutItem.muscleGroup!!,
                         duration = workoutItem.calculateDuration(),
                         onStartClick = {
-                                       navController.navigate("${AppDestinations.WorkoutPlayScreen.rout}/${workoutItem.id}")
+                                       navController.navigate("${AppDestinations.WorkoutPlayScreen.route}/${workoutItem.id}")
                         },
                         onDeleteClicked = {
                                 workoutsViewModel.deleteWorkout(workoutItem)
                         },
                         onEditClicked = {
-                            navController.navigate("${AppDestinations.WorkoutDetailsScreen.rout}/${workoutItem.id}")
+                            navController.navigate("${AppDestinations.WorkoutDetailsScreen.route}/${workoutItem.id}")
                         })
                 }
 

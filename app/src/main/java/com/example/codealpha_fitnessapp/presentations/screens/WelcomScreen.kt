@@ -23,7 +23,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -39,8 +38,8 @@ fun WelcomeScreen(navController: NavHostController, authViewModel: AuthViewModel
     val user: State<FirebaseUser?> = authViewModel.user.collectAsState()
     authViewModel.checkAndUpdateUserStatus()
     if (user.value != null){
-        navController.navigate(AppDestinations.DashboardScreen.rout){
-            popUpTo(AppDestinations.WelcomeScreen.rout){inclusive = true}
+        navController.navigate(AppDestinations.DashboardScreen.route){
+            popUpTo(AppDestinations.WelcomeScreen.route){inclusive = true}
         }
     }
 
@@ -68,9 +67,9 @@ fun WelcomeScreen(navController: NavHostController, authViewModel: AuthViewModel
         WelcomeStartButton(
             txt = "Start",
             onClick = {
-                navController.navigate(AppDestinations.LogInScreen.rout) {
+                navController.navigate(AppDestinations.LogInScreen.route) {
                     // Ensure that the WelcomeScreen is popped off the back stack
-                    popUpTo(AppDestinations.WelcomeScreen.rout) { inclusive = true }
+                    popUpTo(AppDestinations.WelcomeScreen.route) { inclusive = true }
                 }
             },
             modifier = Modifier

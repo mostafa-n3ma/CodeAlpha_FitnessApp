@@ -38,12 +38,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.codealpha_fitnessapp.R
 import com.example.codealpha_fitnessapp.operations.dataMangment.User
 import com.example.codealpha_fitnessapp.operations.getCurrentDate
 import com.example.codealpha_fitnessapp.operations.getCurrentWeekDaysPairs
 import com.example.codealpha_fitnessapp.presentations.Head2Text
+import com.example.codealpha_fitnessapp.presentations.navigation.AppDestinations
 import com.example.codealpha_fitnessapp.presentations.viewModels.AuthViewModel
 import com.example.codealpha_fitnessapp.presentations.viewModels.DashboardViewModel
 import com.example.codealpha_fitnessapp.ui.theme.backgroundColor
@@ -53,13 +53,16 @@ import com.example.codealpha_fitnessapp.ui.theme.primaryColor
 import com.example.codealpha_fitnessapp.ui.theme.textColor
 
 const val DashBoardScreenTAG = "DashboardScreen"
+
 @Composable
 fun DashboardScreen(navController: NavHostController, authViewModel: AuthViewModel? = null) {
-    val dashboardViewModel:DashboardViewModel = hiltViewModel()
-    val userInfo: State<User?> = dashboardViewModel.userInfo.collectAsState()
-    if (userInfo.value !=null){
-        Log.d(DashBoardScreenTAG, "DashboardScreen: $userInfo")
+    val dashboardViewModel: DashboardViewModel = hiltViewModel()
+    val user = authViewModel!!.user.collectAsState()
+    if (user.value == null) {
+        navController.navigate(AppDestinations.WelcomeScreen.route)
     }
+
+    val userInfo = dashboardViewModel.userInfo.collectAsState()
     val backWeeklyActivity: String by dashboardViewModel.backWeeklyActivity.collectAsState()
     val chestWeeklyActivity: String by dashboardViewModel.chestWeeklyActivity.collectAsState()
     val bicepsWeeklyActivity: String by dashboardViewModel.bicepsWeeklyActivity.collectAsState()
@@ -75,11 +78,20 @@ fun DashboardScreen(navController: NavHostController, authViewModel: AuthViewMod
             .background(backgroundColor)
             .padding(horizontal = 16.dp)
     ) {
-        UserWidget(name = userInfo.value?.name?:"", onUserClick = {})
+
+        UserWidget(name = userInfo.value?.name ?: "", onLogoutClicked = {authViewModel.signOut()})
         Spacer(modifier = Modifier.height(16.dp))
         WeekDaysWidget()
         Head2Text(txt = stringResource(R.string.this_week))
-        ActivitiesWidgets(backWeeklyActivity,chestWeeklyActivity,bicepsWeeklyActivity, tricepsWeeklyActivity,legsWeeklyActivity ,shouldersWeeklyActivity , absWeeklyActivity)
+        ActivitiesWidgets(
+            backWeeklyActivity,
+            chestWeeklyActivity,
+            bicepsWeeklyActivity,
+            tricepsWeeklyActivity,
+            legsWeeklyActivity,
+            shouldersWeeklyActivity,
+            absWeeklyActivity
+        )
         Head2Text(txt = stringResource(R.string.goals_progress))
 
     }
@@ -97,28 +109,60 @@ fun ActivitiesWidgets(
 ) {
     LazyRow {
         item {
-            MuscleActivityCard(icon = painterResource(id = R.drawable.cardio), activityName = "Cardio", total_duration = "30 Min")
+            MuscleActivityCard(
+                icon = painterResource(id = R.drawable.cardio),
+                activityName = "Cardio",
+                total_duration = "30 Min"
+            )
         }
         item {
-            MuscleActivityCard(icon = painterResource(id = R.drawable.back_muscle), activityName = "Back", total_duration = "$backWeeklyActivity Min")
+            MuscleActivityCard(
+                icon = painterResource(id = R.drawable.back_muscle),
+                activityName = "Back",
+                total_duration = "$backWeeklyActivity Min"
+            )
         }
         item {
-            MuscleActivityCard(icon = painterResource(id = R.drawable.chest_muscle), activityName = "Chest", total_duration = "$chestWeeklyActivity Min")
+            MuscleActivityCard(
+                icon = painterResource(id = R.drawable.chest_muscle),
+                activityName = "Chest",
+                total_duration = "$chestWeeklyActivity Min"
+            )
         }
         item {
-            MuscleActivityCard(icon = painterResource(id = R.drawable.biceps_muscle), activityName = "Biceps", total_duration = "$bicepsWeeklyActivity Min")
+            MuscleActivityCard(
+                icon = painterResource(id = R.drawable.biceps_muscle),
+                activityName = "Biceps",
+                total_duration = "$bicepsWeeklyActivity Min"
+            )
         }
         item {
-            MuscleActivityCard(icon = painterResource(id = R.drawable.triceps_muscle), activityName = "Triceps", total_duration = "$tricepsWeeklyActivity Min")
+            MuscleActivityCard(
+                icon = painterResource(id = R.drawable.triceps_muscle),
+                activityName = "Triceps",
+                total_duration = "$tricepsWeeklyActivity Min"
+            )
         }
         item {
-            MuscleActivityCard(icon = painterResource(id = R.drawable.legs_muscle), activityName = "Legs", total_duration = "$legsWeeklyActivity Min")
+            MuscleActivityCard(
+                icon = painterResource(id = R.drawable.legs_muscle),
+                activityName = "Legs",
+                total_duration = "$legsWeeklyActivity Min"
+            )
         }
         item {
-            MuscleActivityCard(icon = painterResource(id = R.drawable.sholders_muscle), activityName = "Shoulders", total_duration = "$shouldersWeeklyActivity Min")
+            MuscleActivityCard(
+                icon = painterResource(id = R.drawable.sholders_muscle),
+                activityName = "Shoulders",
+                total_duration = "$shouldersWeeklyActivity Min"
+            )
         }
         item {
-            MuscleActivityCard(icon = painterResource(id = R.drawable.abs_muscle), activityName = "Abs", total_duration = "$absWeeklyActivity Min")
+            MuscleActivityCard(
+                icon = painterResource(id = R.drawable.abs_muscle),
+                activityName = "Abs",
+                total_duration = "$absWeeklyActivity Min"
+            )
         }
 
     }
@@ -126,7 +170,7 @@ fun ActivitiesWidgets(
 }
 
 @Composable
-fun MuscleActivityCard(icon:Painter, activityName:String, total_duration:String) {
+fun MuscleActivityCard(icon: Painter, activityName: String, total_duration: String) {
     Card(
         modifier = Modifier.padding(end = 4.dp),
         colors = CardDefaults.cardColors(
@@ -134,9 +178,9 @@ fun MuscleActivityCard(icon:Painter, activityName:String, total_duration:String)
         ),
         shape = RoundedCornerShape(10)
     ) {
-        Row (
+        Row(
 
-        ){
+        ) {
             Icon(
                 painter = icon,
                 contentDescription = "",
@@ -166,7 +210,7 @@ fun MuscleActivityCard(icon:Painter, activityName:String, total_duration:String)
                         textAlign = TextAlign.Center,
                     ),
 
-                )
+                    )
             }
 
         }
@@ -230,44 +274,66 @@ fun WeekDaysWidget() {
 
 }
 
+
+
+
+@Preview(showBackground = true)
 @Composable
-fun UserWidget(name: String, onUserClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .padding(top = 30.dp)
-            .clickable {
-                onUserClick()
-            },
-        verticalAlignment = Alignment.Bottom,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.big_user),
-            contentDescription = "",
-            Modifier.size(64.dp)
-        )
-        Column {
-            Text(
-                text = "Hello",
-                style = TextStyle(
-                    fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                    fontSize = 20.sp
-                )
-            )
-            Text(
-                text = name,
-                style = TextStyle(
-                    fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                    fontSize = 24.sp
-                )
-            )
-        }
+fun userPreview() {
+    UserWidget(name = "Mostafa") {
+
     }
 }
-
-
-@Preview
 @Composable
-fun DashboardPreview() {
-    DashboardScreen(navController = rememberNavController())
+fun UserWidget(name: String, onLogoutClicked: () -> Unit) {
+    Row (
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ){
+        Row(
+            modifier = Modifier
+                .padding(top = 30.dp),
+            verticalAlignment = Alignment.Bottom,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.big_user),
+                contentDescription = "",
+                Modifier.size(64.dp)
+            )
+            Column {
+                Text(
+                    text = "Hello",
+                    style = TextStyle(
+                        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                        fontSize = 20.sp
+                    )
+                )
+                Text(
+                    text = name,
+                    style = TextStyle(
+                        fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                        fontSize = 24.sp
+                    )
+                )
+            }
+        }
+
+        Icon(
+            painter = painterResource(id = R.drawable.logout),
+            contentDescription = "",
+            Modifier
+                .size(32.dp)
+                .clickable { onLogoutClicked() }
+        )
+    }
+
 }
+
+
+//@Preview
+//@Composable
+//fun DashboardPreview() {
+//    DashboardScreen(navController = rememberNavController())
+//}

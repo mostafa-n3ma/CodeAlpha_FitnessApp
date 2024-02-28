@@ -65,9 +65,9 @@ fun LogInScreen(navController: NavController, authViewModel: AuthViewModel? = nu
     val user: State<FirebaseUser?> = authViewModel!!.user.collectAsState()
 
     if (user.value != null){
-        navController.navigate(AppDestinations.DashboardScreen.rout) {
+        navController.navigate(AppDestinations.DashboardScreen.route) {
             // Ensure that the WelcomeScreen is popped off the back stack
-            popUpTo(AppDestinations.LogInScreen.rout) { inclusive = true }
+            popUpTo(AppDestinations.LogInScreen.route) { inclusive = true }
         }
     }
 
@@ -196,7 +196,7 @@ fun BottomSheetContent(
             normalText = stringResource(R.string.dont_have_account),
             annotatedText = stringResource(R.string.sign_up),
             onclick = {
-                navController.navigate(AppDestinations.SignUpScreen.rout)
+                navController.navigate(AppDestinations.SignUpScreen.route)
             })
 
     }

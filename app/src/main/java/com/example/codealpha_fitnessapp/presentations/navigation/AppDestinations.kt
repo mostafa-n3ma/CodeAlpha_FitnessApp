@@ -1,6 +1,6 @@
 package com.example.codealpha_fitnessapp.presentations.navigation
 
-enum class AppDestinations(val rout:String) {
+enum class AppDestinations(val route:String) {
     WelcomeScreen("WELCOME_SCREEN"),
     LogInScreen("LOGIN"),
     SignUpScreen("SIGNUP"),
@@ -8,5 +8,5 @@ enum class AppDestinations(val rout:String) {
     WorkoutsScreen("WORKOUTS"),
     WorkoutDetailsScreen("WORKOUT_DETAILS"),
     WorkoutPlayScreen("PLAY_WORKOUT"),
-    GoalSScreen("GOALS")
+    GoalsScreen("GOALS")
 }
